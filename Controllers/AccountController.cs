@@ -124,6 +124,7 @@ namespace Student3.Controllers
                     contact["firstname"] = user.FirstName;
                     contact["lastname"] = user.LastName;
                     contact["emailaddress1"] = user.Email;
+                    contact.Id = Guid.Parse(user.Id);
                     service.Create(contact);
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
