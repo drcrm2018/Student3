@@ -123,6 +123,11 @@ namespace Student3.Controllers
                 try
                 {
                     _context.Update(inquiry);
+                    var service = CRM.CrmService.GetServiceProvider();
+                    var crmInquiry = service.Retrieve("student3_inquiry", inquiry.InquiryId, new Microsoft.Xrm.Sdk.Query.ColumnSet("student3_question"));
+                    crmInquiry["student3_question"] = inquiry.Question;
+                    service.Update(crmInquiry);
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -167,6 +172,9 @@ namespace Student3.Controllers
             var inquiry = await _context.Inquiry.SingleOrDefaultAsync(m => m.InquiryId == id);
             _context.Inquiry.Remove(inquiry);
             await _context.SaveChangesAsync();
+
+            var service = CRM.CrmService.GetServiceProvider();
+            service.Delete("student3_inquiry", id);
             return RedirectToAction("Index");
         }
 
