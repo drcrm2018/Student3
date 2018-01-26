@@ -80,6 +80,7 @@ namespace Student3.Controllers
                 crmInquiry["student3_question"] = inquiry.Question;
                 crmInquiry["student3_contact"] = new EntityReference(
                     "contact", inquiry.ContactId);
+                crmInquiry["student3_name"] = _userManager.GetUserName(User);
                
                 var service = CRM.CrmService.GetServiceProvider();
                 service.Create(crmInquiry);
