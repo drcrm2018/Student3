@@ -124,8 +124,10 @@ namespace Student3.Controllers
                 {
                     _context.Update(inquiry);
                     var service = CRM.CrmService.GetServiceProvider();
-                    var crmInquiry = service.Retrieve("student3_inquiry", inquiry.InquiryId, new Microsoft.Xrm.Sdk.Query.ColumnSet("student3_question"));
+                    var crmInquiry = service.Retrieve("student3_inquiry", inquiry.InquiryId, new Microsoft.Xrm.Sdk.Query.ColumnSet("student3_question","student3_response"));
                     crmInquiry["student3_question"] = inquiry.Question;
+                    crmInquiry["student3_response"] = inquiry.Response;
+
                     service.Update(crmInquiry);
 
                     await _context.SaveChangesAsync();
